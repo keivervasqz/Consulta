@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Traslado de Empleado a Sucursal";
+    string messaje = ViewBag.result;
+    List<SelectListItem> listaUser = ViewBag.ListaUser as List<SelectListItem>;
+    List<SelectListItem> listaBiometricos = ViewBag.ListaBiometricos as List<SelectListItem>;
+    List<SelectListItem> listaSucursales = ViewBag.ListaSucursales as List<SelectListItem>;
+}
+
+<hr />
+
+<input type="hidden" id="page" value="UserBiometric" />
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <form method="post" action="/UserBiometric/SetUser">
+            <div class="form-group divider-vertical">
+                <h3 class="margen-left">Traslado de empleado a Sucursal</h3>
+                <hr />
+                <div class="text-center form-group">
+                    <img src="~/images/biotobio.png" height="70" />
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p>Seleccione Empleado</p>
+                        <select class="form-control" id="ListUser" name="ListUser" required="required">
+                            <option selected="selected" disabled="disabled">Seleccione</option>
+                            @foreach (var item in listaUser)
+                            {
+                                <option value="@Html.DisplayFor(Modelitem => item.Value)">@Html.DisplayFor(Modelitem => item.Text)</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p>Seleccione Sucursal</p>
+                        <select class="form-control" id="sucursal" name="sucursal">
+                            <option value="" selected="selected">Seleccionar Todas</option>
+                            @foreach (var item in listaSucursales)
+                            {
+                                <option value="@Html.DisplayFor(Modelitem => item.Value)">@Html.DisplayFor(Modelitem => item.Text)</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-center col-xs-12" style="display:inline-block">
+                    <input type="submit" class="btn btn-success btn-anch" value="Enviar" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

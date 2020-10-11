@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BIOMETRICOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="biometricos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ip" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="modelo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="id_subdivision" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Int32" />
+  </EntityType>
+  <EntityType Name="divisiones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="id_sociedad" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="empleados">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="pernr" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="lastname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="depto" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="sucursal" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="dni" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="date_update" Type="DateTime" Precision="3" />
+    <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="status_empleado" Type="Int32" />
+  </EntityType>
+  <EntityType Name="finger_empleados">
+    <Key>
+      <PropertyRef Name="fingerIndex" />
+      <PropertyRef Name="pernr" />
+    </Key>
+    <Property Name="pernr" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fingerIndex" Type="Int32" Nullable="false" />
+    <Property Name="flag" Type="Int32" Nullable="false" />
+    <Property Name="fingerData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fingerLength" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="logs_error">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="platform" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="date" Type="DateTime" Precision="3" />
+    <Property Name="routine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="errorMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ip" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="marcaciones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="data" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="device" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="date_marcacion" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="marcaciones_app">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pernr" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="zatza" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ldate" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ltime" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lon" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="roles">
+    <Key>
+      <PropertyRef Name="id_rol" />
+    </Key>
+    <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rol_descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nivel_rol" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="usuarios" Relationship="Self.fk_roles" FromRole="roles" ToRole="usuarios" />
+  </EntityType>
+  <EntityType Name="sap_empleados">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pernr" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="lastname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="depto" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="sucursal" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="dni" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="status_empleado" Type="Int32" />
+  </EntityType>
+  <EntityType Name="sap_marcaciones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pernr" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="ldate" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="ltime" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="zatza" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="dallf" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="fulldata" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="id_biometrico" Type="Int32" />
+    <Property Name="fecha" Type="DateTime" Precision="3" />
+    <Property Name="date_capture" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="sociedades">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="subdivisiones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="id_division" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_rol" Type="Int32" Nullable="false" />
+    <Property Name="pernr" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="roles" Relationship="Self.fk_roles" FromRole="usuarios" ToRole="roles" />
+  </EntityType>
+  <Association Name="fk_roles">
+    <End Role="roles" Type="Self.roles" Multiplicity="1" />
+    <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roles">
+        <PropertyRef Name="id_rol" />
+      </Principal>
+      <Dependent Role="usuarios">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BIOMETRICOEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="biometricos" EntityType="Self.biometricos" />
+    <EntitySet Name="divisiones" EntityType="Self.divisiones" />
+    <EntitySet Name="empleados" EntityType="Self.empleados" />
+    <EntitySet Name="finger_empleados" EntityType="Self.finger_empleados" />
+    <EntitySet Name="logs_error" EntityType="Self.logs_error" />
+    <EntitySet Name="marcaciones" EntityType="Self.marcaciones" />
+    <EntitySet Name="marcaciones_app" EntityType="Self.marcaciones_app" />
+    <EntitySet Name="roles" EntityType="Self.roles" />
+    <EntitySet Name="sap_empleados" EntityType="Self.sap_empleados" />
+    <EntitySet Name="sap_marcaciones" EntityType="Self.sap_marcaciones" />
+    <EntitySet Name="sociedades" EntityType="Self.sociedades" />
+    <EntitySet Name="subdivisiones" EntityType="Self.subdivisiones" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" />
+    <AssociationSet Name="fk_roles" Association="Self.fk_roles">
+      <End Role="roles" EntitySet="roles" />
+      <End Role="usuarios" EntitySet="usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

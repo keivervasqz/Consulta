@@ -1,0 +1,226 @@
+﻿@using Admin_Interface.Models.Request;
+@using Admin_Interface.Models;
+
+@*@model IEnumerable<Admin_Interface.Models.sap_empleados>*@
+@model Paginadorsap_Empleados<sap_empleados>
+
+@{
+    ViewBag.Title = "Empleados";
+    List<subdivisionRequest> listsubdivision = (List<subdivisionRequest>)ViewBag.Subdivision;
+    List<SelectListItem> itemsubdi = new List<SelectListItem>();
+
+    foreach (subdivisionRequest s in listsubdivision)
+    {
+        SelectListItem selListItem = new SelectListItem()
+        {
+            Value = s.id,
+            Text = s.nombre.ToString()
+        };
+        itemsubdi.Add(selListItem);
+    }
+}
+
+<h2>Empleados</h2>
+
+<hr />
+
+<input type="hidden" id="page" value="Empleados" />
+
+<div class="form-inline">
+    <form method="get" action=@Url.Action("Index", "sap_empleado")>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <input type="number" class="form-control" id="pernr" name="pernr" placeholder="Pernr" />
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" />
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <select class="form-control" id="sucursal" name="sucursal">
+                        <option selected="selected" disabled="disabled">Sucursal</option>
+                        @foreach (SelectListItem item in itemsubdi)
+                        {
+                            <option value="@Html.DisplayFor(model => item.Value)">@Html.DisplayFor(model => item.Text)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <select class="form-control" id="status_empleado" name="status_empleado">
+                        <option value="" selected="selected" disabled="disabled">Seleccione Estatus</option>
+                        <option value="0">Retirado</option>
+                        <option value="1">Suspendido</option>
+                        <option value="3">Activo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <button id="btn-buscar" class="btn btn-success col-xs-12" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<hr />
+
+<div class="resalt form-group col-xs-12">
+    <div class="form-group">
+        <h3 class="h3-table">Empleados Registrados</h3>
+    
+        <a href="@Url.Action("Create", "sap_empleado")" class="create-intable">
+            <input type="button" class="btn btn-success" value="Nuevo Empleado"/>
+        </a>
+    </div>
+    <table class="table table-responsive table-striped">
+        <tr>
+            <th>Pernr</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Sucursal</th>
+            @*<th>Registrado</th>*@
+            @*<th>Permiso</th>*@
+            <th>Estatus Empleado</th>
+            <th class="text-right"><div class="td-icon-table">Acciones</div></th>
+        </tr>
+        @foreach (var item in Model.Resultado) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pernr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dni)
+                </td>
+                <td>
+                    @foreach (var nombre_sucursal in listsubdivision)
+                    {
+                        if (nombre_sucursal.id == item.sucursal)
+                        {
+                            @Html.DisplayFor(modelItem => nombre_sucursal.nombre)
+                        }
+                    }
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.created)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.permiso)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>*@
+                <td>
+                    @if (item.status_empleado.ToString() == "0")
+                    {
+                        var variable = "Retirado";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.status_empleado.ToString() == "1")
+                    {
+                        var variable = "Suspendido";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.status_empleado.ToString() == "3")
+                    {
+                        var variable = "Activo";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                </td>
+                <td class="text-right">
+                    <div class="td-icon-table">
+                        <a href="@Url.Action("Edit", "sap_empleado" , new { id=item.id })"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="#" onclick="return deleteobject('@Html.DisplayFor(modelItem => item.id)', 'empleado')" ><span class="glyphicon glyphicon-trash"></span></a>
+                        <a href="@Url.Action("", "" , new { id=item.id })"><span class="glyphicon glyphicon-send"></span></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="form-group">
+    @if (Model.Resultado.Count() > 0)
+    {
+        <span class="paginador">
+            <strong>@Model.TotalRegistros</strong> registros encontrados
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+        <span class="paginador">
+            Página <strong>@(Model.PaginaActual)</strong> de
+            <strong>@Model.TotalPaginas</strong>
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+    else
+    {
+        <span class="paginador">No hay resultados para esta búsqueda</span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+
+    @if (Model.PaginaActual > 1)
+    {
+        @Html.ActionLink("<<", "Index", new
+   {
+       p = 1,
+       pernr = Model.tempVar.pernr,
+       name = Model.tempVar.name,
+       status = Model.tempVar.status,
+       sucursal = Model.tempVar.sucursal
+   },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new
+   {
+       p = Model.PaginaActual - 1,
+       pernr = Model.tempVar.pernr,
+       name = Model.tempVar.name,
+       status = Model.tempVar.status,
+       sucursal = Model.tempVar.sucursal
+   },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("<<", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+    <span></span>
+    @if (Model.PaginaActual < Model.TotalPaginas)
+    {
+        @Html.ActionLink("Siguiente", "Index", new
+   {
+       p = Model.PaginaActual + 1,
+       pernr = Model.tempVar.pernr,
+       name = Model.tempVar.name,
+       status = Model.tempVar.status,
+       sucursal = Model.tempVar.sucursal
+   },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new
+   {
+       p = Model.TotalPaginas,
+       pernr = Model.tempVar.pernr,
+       name = Model.tempVar.name,
+       status = Model.tempVar.status,
+       sucursal = Model.tempVar.sucursal
+   },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("Siguiente", "Index", new { p = Model.TotalPaginas - 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new { p = Model.TotalPaginas },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+</div>

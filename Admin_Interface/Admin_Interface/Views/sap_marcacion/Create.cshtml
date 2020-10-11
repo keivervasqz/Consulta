@@ -1,0 +1,97 @@
+﻿@using Admin_Interface.Models.Request;
+
+@model Admin_Interface.Models.sap_marcaciones
+
+@{
+    ViewBag.Title = "Marcaciones - Registro";
+    List<biometricoRequest> biometrico = (List<biometricoRequest>)ViewBag.biometrico;
+    List<SelectListItem> items = new List<SelectListItem>();
+    
+    foreach (biometricoRequest s in biometrico)
+    {
+        SelectListItem selListItem = new SelectListItem() 
+        { 
+            Value = s.id.ToString(), 
+            Text = s.ip.ToString()
+        };
+        items.Add(selListItem);
+    }
+}
+
+<h2>Marcaciones</h2>
+
+<hr />
+
+<input type="hidden" id="page" value="MarcacionesCreate" />
+
+<div class="resalt form-group col-xs-12 text-center">
+
+    @using (Html.BeginForm())
+    {
+        <h3>Registro de nueva Marcación</h3>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group col-sm-12">
+            @Html.DropDownList("dirIp", items, "Selecciona Dirección IP", new { @class="form-control", @id="dirIp", @required="required" })
+            @Html.HiddenFor(model => model.id_biometrico, new { @id="id_biometrico", @name="id_biometrico" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            @Html.EditorFor(model => model.pernr, new { htmlAttributes = new { @class = "form-control", @placeholder="N° Empleado", @required="required" } })
+            @Html.ValidationMessageFor(model => model.pernr, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <input type="text" id="fecha" name="fecha" maxlength="10" class="form-control date" data-date-format="YYYY/MM/DD" />
+            @Html.HiddenFor(model => model.ldate, new { @id="ldate", @name="ldate" })
+            @Html.ValidationMessageFor(model => model.ldate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <input type="text" id="hora" name="hora" maxlength="8" class="form-control time" data-date-format="HH:mm:ss" />
+            @Html.HiddenFor(model => model.ltime, new { @id="ltime", @name="ltime", @Value = DateTime.Now })
+            @Html.ValidationMessageFor(model => model.ltime, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="form-group col-sm-12">
+            <select class="form-control" id="in-out" name="in-out">
+                <option value="P10">Inicio de Jornada</option>
+                <option value="P15">Salida Pausa Jornada</option>
+                <option value="P25">Entrada Pausa Jornada</option>
+                <option value="P20">Salida de Jornada</option>
+            </select>
+            @Html.HiddenFor(model => model.zatza, new { @id="zatza", @name="zatza" })
+        </div>
+        
+        <div class="form-group col-sm-12">
+            <select class="form-control" id="jornada" name="jornada">
+                <option value="">Fin de jornada en mismo día</option>
+                <option value="X">Fin de jornada al día siguiente</option>
+            </select>
+            @Html.HiddenFor(model => model.dallf, new { @id="dallf", @name="dallf" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <select class="form-control" id="estatus" name="estatus">
+                <option value="0">Sin Procesar</option>
+                <option value="1">Procesado</option>
+            </select>
+            @Html.HiddenFor(model => model.status, new { @id="status", @name="status" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            @Html.HiddenFor(model => model.fulldata, new { htmlAttributes = new { @class = "form-control", @placeholder="Fulldata", @required="required" } })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <input type="submit" value="Registrar" class="btn btn-success" />
+            <a href="@Url.Action("Index", "sap_marcacion" )">
+                <input type="button" class="btn btn-info" value="Volver Atras" />
+            </a>
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

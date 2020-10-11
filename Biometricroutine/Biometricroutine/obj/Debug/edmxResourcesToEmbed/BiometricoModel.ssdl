@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BIOMETRICOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="biometricos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ip" Type="varchar" MaxLength="20" />
+    <Property Name="modelo" Type="varchar" MaxLength="15" />
+    <Property Name="id_subdivision" Type="varchar" MaxLength="6" />
+    <Property Name="status" Type="int" />
+  </EntityType>
+  <EntityType Name="divisiones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="45" />
+    <Property Name="id_sociedad" Type="varchar" MaxLength="6" />
+  </EntityType>
+  <EntityType Name="empleados">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="pernr" Type="varchar" MaxLength="45" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="lastname" Type="varchar" MaxLength="45" />
+    <Property Name="depto" Type="varchar" MaxLength="45" />
+    <Property Name="sucursal" Type="varchar" MaxLength="45" />
+    <Property Name="dni" Type="varchar" MaxLength="45" />
+    <Property Name="date_update" Type="datetime" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="status" Type="int" />
+    <Property Name="status_empleado" Type="int" />
+  </EntityType>
+  <EntityType Name="finger_empleados">
+    <Key>
+      <PropertyRef Name="pernr" />
+      <PropertyRef Name="fingerIndex" />
+    </Key>
+    <Property Name="pernr" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="fingerIndex" Type="int" Nullable="false" />
+    <Property Name="flag" Type="int" Nullable="false" />
+    <Property Name="fingerData" Type="varchar(max)" Nullable="false" />
+    <Property Name="fingerLength" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="logs_error">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="platform" Type="varchar" MaxLength="50" />
+    <Property Name="date" Type="datetime" />
+    <Property Name="routine" Type="varchar" MaxLength="50" />
+    <Property Name="errorMessage" Type="varchar" MaxLength="500" />
+    <Property Name="ip" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="marcaciones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="data" Type="varchar" MaxLength="45" />
+    <Property Name="device" Type="varchar" MaxLength="45" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="date_marcacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="marcaciones_app">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pernr" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="zatza" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="ldate" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="ltime" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="lat" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="lon" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="roles">
+    <Key>
+      <PropertyRef Name="id_rol" />
+    </Key>
+    <Property Name="id_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rol_descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="nivel_rol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sap_empleados">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pernr" Type="varchar" MaxLength="45" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="lastname" Type="varchar" MaxLength="45" />
+    <Property Name="depto" Type="varchar" MaxLength="45" />
+    <Property Name="sucursal" Type="varchar" MaxLength="6" />
+    <Property Name="dni" Type="varchar" MaxLength="45" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="status" Type="int" />
+    <Property Name="status_empleado" Type="int" />
+  </EntityType>
+  <EntityType Name="sap_marcaciones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pernr" Type="varchar" MaxLength="8" />
+    <Property Name="ldate" Type="varchar" MaxLength="8" />
+    <Property Name="ltime" Type="varchar" MaxLength="6" />
+    <Property Name="zatza" Type="varchar" MaxLength="3" />
+    <Property Name="dallf" Type="varchar" MaxLength="1" />
+    <Property Name="status" Type="int" />
+    <Property Name="fulldata" Type="varchar" MaxLength="45" />
+    <Property Name="id_biometrico" Type="int" />
+    <Property Name="fecha" Type="datetime" />
+    <Property Name="date_capture" Type="datetime" />
+  </EntityType>
+  <EntityType Name="sociedades">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="subdivisiones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="45" />
+    <Property Name="id_division" Type="varchar" MaxLength="6" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="lastname" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+    <Property Name="pernr" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="45" />
+    <Property Name="created_at" Type="datetime" Nullable="false" />
+    <Property Name="status" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_roles">
+    <End Role="roles" Type="Self.roles" Multiplicity="1" />
+    <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roles">
+        <PropertyRef Name="id_rol" />
+      </Principal>
+      <Dependent Role="usuarios">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BIOMETRICOModelStoreContainer">
+    <EntitySet Name="biometricos" EntityType="Self.biometricos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="divisiones" EntityType="Self.divisiones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="empleados" EntityType="Self.empleados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="finger_empleados" EntityType="Self.finger_empleados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="logs_error" EntityType="Self.logs_error" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="marcaciones" EntityType="Self.marcaciones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="marcaciones_app" EntityType="Self.marcaciones_app" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sap_empleados" EntityType="Self.sap_empleados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sap_marcaciones" EntityType="Self.sap_marcaciones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sociedades" EntityType="Self.sociedades" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="subdivisiones" EntityType="Self.subdivisiones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_roles" Association="Self.fk_roles">
+      <End Role="roles" EntitySet="roles" />
+      <End Role="usuarios" EntitySet="usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

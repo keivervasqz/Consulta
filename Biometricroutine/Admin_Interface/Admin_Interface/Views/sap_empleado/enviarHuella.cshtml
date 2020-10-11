@@ -1,0 +1,53 @@
+﻿@using Admin_Interface.Models.Request;
+@model Admin_Interface.Models.sap_empleados
+@{
+    ViewBag.Title = "Enviar Huella a Biométrico";
+    List<subdivisionRequest> subdivisionList = (List<subdivisionRequest>)ViewBag.nombreSubdivision;
+    List<SelectListItem> items = new List<SelectListItem>();
+
+    foreach (subdivisionRequest s in subdivisionList)
+    {
+        SelectListItem selListItem = new SelectListItem()
+        {
+            Value = s.id.ToString(),
+            Text = s.nombre.ToString()
+        };
+        items.Add(selListItem);
+    }
+}
+<h2>Huellas</h2>
+<hr />
+<input type="hidden" id="page" value="BiometricosEdit" />
+<div class="resalt form-group col-xs-12 text-center">
+    @using (Html.BeginForm("enviarHuella", "sap_empleado", FormMethod.Post, new { @id = "form-edit" }))
+    {
+        <h3>Enviar huella a Biométrico</h3>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.pernr, new { @id = "pernr", @name = "pernr" })
+
+        @*<div class="form-group col-sm-12">
+            @Html.EditorFor(model => model.ip, new { htmlAttributes = new { @class = "form-control", @id = "ip", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.ip, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            @Html.EditorFor(model => model.modelo, new { htmlAttributes = new { @class = "form-control", @id = "modelo", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.modelo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            @Html.EditorFor(model => model.id_subdivision, new { htmlAttributes = new { @class = "form-control", @id = "modelo", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.id_subdivision, "", new { @class = "text-danger" })
+        </div>*@
+
+        <div class="form-group col-sm-12">
+            <input id="registry" type="submit" value="Enviar huella" class="btn btn-success" />
+            <a href="@Url.Action("Index", "biometrico" )">
+                <input type="button" class="btn btn-info" value="Volver Atras" />
+            </a>
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

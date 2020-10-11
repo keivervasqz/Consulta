@@ -1,0 +1,55 @@
+﻿@using Admin_Interface.Models.Request;
+
+@model IEnumerable<Admin_Interface.Models.biometrico>
+
+@{
+    ViewBag.Title = "Biométricos";
+    List<subdivisionRequest> listsubdivision = (List<subdivisionRequest>)ViewBag.Subdivision;
+}
+
+<h2>Biométricos</h2>
+
+<hr />
+
+<input type="hidden" id="page" value="Biometricos" />
+
+<div class="resalt form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="form-group">
+        <h3 class="h3-table">Biométricos Registrados</h3>
+    
+        <a href="@Url.Action("Create", "biometrico")" class="create-intable">
+            <input type="button" class="btn btn-success" value="Nuevo Biométrico"/>
+        </a>
+    </div>
+    <table class="table table-responsive table-striped">
+        <tr>
+            <th>Direción IP</th>
+            <th>Modelo</th>
+            <th>Subdivisión</th>
+            <th>Estatus</th>
+            <th class="text-right"><div class="td-icon-table">Acciones</div></th>
+        </tr>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_subdivision)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td class="text-right">
+                    <div class="td-icon-table">
+                        <a href="@Url.Action("Edit", "biometrico" , new { id=item.ip })"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="#" onclick="return deleteobject('@Html.DisplayFor(modelItem => item.ip)', 'biometrico')" ><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

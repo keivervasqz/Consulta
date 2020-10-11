@@ -1,0 +1,73 @@
+﻿@using Admin_Interface.Models.Request;
+
+@model Admin_Interface.Models.biometricos
+
+@{
+    ViewBag.Title = "Biométricos - Actualización";
+    List<subdivisionRequest> subdivisionList = (List<subdivisionRequest>)ViewBag.Subdivision;
+    List<SelectListItem> items = new List<SelectListItem>();
+    
+    foreach (subdivisionRequest s in subdivisionList)
+    {
+        SelectListItem selListItem = new SelectListItem() 
+        { 
+            Value = s.id.ToString(), 
+            Text = s.nombre.ToString()
+        };
+        items.Add(selListItem);
+    }
+}
+
+<h2>Biométricos</h2>
+
+<hr />
+
+<input type="hidden" id="page" value="BiometricosEdit" />
+
+<div class="resalt form-group col-xs-12 text-center">
+
+    @using (Html.BeginForm("Edit", "biometrico", FormMethod.Post, new { @id="form-edit" } ))
+    {
+        <h3>Actualización de Biométrico</h3>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id, new { @id="id", @name="id" })
+
+        <div class="form-group col-sm-12">
+            @Html.EditorFor(model => model.ip, new { htmlAttributes = new { @class = "form-control", @id="ip", @readonly="readonly" } })
+            @Html.ValidationMessageFor(model => model.ip, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <select class="form-control" id="model" name="model" required="required">
+                <option value="" selected="selected" disabled="disabled">Seleccione Modelo</option>
+                <option value="3nStar">3nStar</option>
+                <option value="ZKteco">ZKteco</option>
+            </select>
+            @Html.HiddenFor(model => Model.modelo, new { @id="modelo", @name="modelo" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            @Html.DropDownList("subdivision", items, "Seleciona Subdivisión", new { @class="form-control", @id="subdivision", @required="required" })
+            @Html.HiddenFor(model => model.id_subdivision, new { @id="id_subdivision", @name="id_subdivision" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <select class="form-control" id="estatus" name="estatus">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            @Html.HiddenFor(model => model.status, new { @id="status", @name="status" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <input id="registry" type="submit" value="Actualizar" class="btn btn-success" />
+            <a href="@Url.Action("Index", "biometrico" )">
+                <input type="button" class="btn btn-info" value="Volver Atras" />
+            </a>
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

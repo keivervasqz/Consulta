@@ -1,0 +1,160 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* preloader */
+#preloader {
+    position: fixed;
+    top:0; left:0;
+    right:0; bottom:0;
+    background: #FFFFFF;
+	opacity: .9;
+    z-index: 100;
+}
+
+#loader {
+	width: 100%;
+    position: absolute;
+    left: 25%;
+    top: 15%;
+}
+
+.loading{
+	width:50%;
+	opacity:.9;
+}
+
+.container-nav{
+    height: 60px;
+    padding-top:5px;
+}
+
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+    float:left;
+    width:100%;
+}
+
+.h3-table{
+    margin-top: 0;
+    display: inline;
+}
+
+.create-intable{
+    float:right;
+}
+
+.td-icon-table {
+    margin-right:15px;
+}
+
+.panel-footer{
+    background-color:#222222;
+    color:white;
+}
+
+.hcenter{
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+#corazon{
+    font-size:medium;
+}
+
+.resalt{
+    padding: 30px;
+    line-height: 2.1428571435;
+    color: inherit;
+    background-color: #eeeeee;
+}
+
+.separate{
+    margin-right: -10px;
+    margin-left: 10px;
+}
+
+.col-centered{
+    float:none;
+    margin: 10px 0px;
+}
+
+#logo-header{
+    float:left;
+    margin-right:15px;
+}
+
+.btn-opcion{
+	margin-top:10px;
+}
+
+.btn-anch{
+    padding-left:50px;
+    padding-right:50px;
+}
+
+.pading-not{
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+}
+
+@media screen and (max-width: 992px){
+    .pading-not{
+        padding-bottom: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 0px;
+    }
+
+    .separate{
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+    #logo-header{
+        margin-left:5px;
+        margin-right:0px;
+    }
+
+    .col-centered{
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+span{
+    font-size:x-large;
+}
+
+.alert-danger{
+    border-radius: 6px;
+}
+
+.paginador{
+    font-size: large;
+}
+
+.divider-vertical {
+    border-right: inset;
+    border-left: inset;
+}
+
+.margen-left{
+    margin-left:15px;
+}
+
+.label {
+    font-weight:normal;
+}

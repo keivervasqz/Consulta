@@ -1,0 +1,251 @@
+﻿@using Admin_Interface.Models;
+@using Admin_Interface.Models.Request;
+
+@model PaginadorSap_marcacion<sap_marcaciones>
+
+@{
+    ViewBag.Title = "Marcaciones";
+    List<biometricoRequest> biometrico = (List<biometricoRequest>)ViewBag.biometrico;
+    List<SelectListItem> items = new List<SelectListItem>();
+
+    foreach (biometricoRequest s in biometrico)
+    {
+        SelectListItem selListItem = new SelectListItem()
+        {
+            Value = s.id.ToString(),
+            Text = s.ip.ToString()
+        };
+        items.Add(selListItem);
+    }
+
+    //List<usuarioRequest> usuario = (List<usuarioRequest>)ViewBag.datoUsuario;
+    //List<SelectListItem> itemUsuario = new List<SelectListItem>();
+
+    //foreach (usuarioRequest j in usuario)
+    //{
+    //    SelectListItem selListItem = new SelectListItem()
+    //    {
+    //        Value = j.name.ToString(),
+    //        Text = j..ToString()
+    //    };
+    //    items.Add(selListItem);
+    //}
+}
+
+<h2>Marcaciones</h2>
+
+<hr />
+
+<input type="hidden" id="page" value="Marcaciones" />
+
+<div class="form-group">
+    <form id="form-search" method="get" action=@Url.Action("Index", "sap_marcacion" )>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10">
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+                    <input type="text" class="form-control date" id="finicio" name="finicio" data-date-format="YYYY/MM/DD" placeholder="Fecha Inicial" autocomplete="off" />
+                </div>
+
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+                    <input type="text" class="form-control date" id="ffin" name="ffin" data-date-format="YYYY/MM/DD" placeholder="Fecha Final" autocomplete="off" />
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <input type="text" class="form-control" id="pernr" name="pernr" placeholder="N° Empleado" />
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <select class="form-control" id="dirIp" name="dirIp">
+                        <option selected="selected" disabled="disabled">Dirección IP</option>
+                        @foreach (SelectListItem item in items){
+                            <option value="@Html.DisplayFor(model => item.Value)">@Html.DisplayFor(model => item.Text)</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <select class="form-control" id="in_out" name="in_out">
+                        <option value="" selected="selected" disabled="disabled">Selecciona Zatza</option>
+                        <option value="P10">Inicio de Jornada</option>
+                        <option value="P15">Salida Pausa Jornada</option>
+                        <option value="P25">Entrada Pausa Jornada</option>
+                        <option value="P20">Salida de Jornada</option>
+                    </select>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <select class="form-control" id="moment" name="moment">
+                        <option value="" selected="selected" disabled="disabled">Selecciona Dallf</option>
+                        <option value="0">Fin de jornada en mismo día</option>
+                        <option value="X">Fin de jornada al día siguiente</option>
+                    </select>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <select class="form-control" id="status" name="status">
+                        <option value="" selected="selected" disabled="disabled">Seleccione Estatus</option>
+                        <option value="0">Sin Procesar</option>
+                        <option value="1">Procesado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-2">
+                <button id="btn-buscar" class="btn btn-success col-xs-12" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr />
+
+<div class="resalt form-group col-xs-12">
+    <div class="form-group">
+        <h3 class="h3-table">Marcaciones Registradas</h3>
+    
+        <a href="@Url.Action("Create", "sap_marcacion")" class="create-intable">
+            <input type="button" class="btn btn-success" value="Nueva Marcación"/>
+        </a>
+    </div>
+    <table class="table table-responsive table-striped">
+        <tr>
+            <th>Biometrico IP</th>
+            <th>Pernr</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Zatza</th>
+            <th>Dallf</th>
+            <th>Estatus</th>
+            <th class="text-right"><div class="td-icon-table">Acciones</div></th>
+        </tr>
+        @foreach (var item in Model.Resultado) {
+            <tr>
+                <td>
+                    @foreach (biometricoRequest bio in biometrico){
+                        if (bio.id == item.id_biometrico){
+                            @Html.DisplayFor(modelItem => bio.ip);
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pernr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ldate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ltime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.zatza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dallf)
+                </td>
+                <td>
+                    @switch (item.status)
+                    {
+                        case 0:
+                            @Html.Raw("Sin Procesar");
+                            break;
+                        case 1:
+                            @Html.Raw("Procesado");
+                            break;
+                    }
+                </td>
+                <td class="text-right">
+                    <div class="td-icon-table">
+                        <a href="@Url.Action("Edit", "sap_marcacion" , new { id=item.id })"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="#" onclick="return deleteobject('@Html.DisplayFor(modelItem => item.id)', 'sap_marcacion')" ><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="form-group">
+    @if (Model.Resultado.Count() > 0)
+    {
+        <span class="paginador">
+            <strong>@Model.TotalRegistros</strong> registros encontrados
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+        <span class="paginador">
+            Página <strong>@(Model.PaginaActual)</strong> de 
+            <strong>@Model.TotalPaginas</strong>
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+    else
+    {
+        <span class="paginador">No hay resultados para esta búsqueda</span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+
+    @if (Model.PaginaActual > 1)
+    {
+        @Html.ActionLink("<<", "Index", new { 
+                p = 1,
+                finicio = Model.tempVar.finicio,
+                ffin = Model.tempVar.ffin,
+                pernr = Model.tempVar.pernr,
+                dirIp = Model.tempVar.dirIp,
+                in_out = Model.tempVar.in_out,
+                moment = Model.tempVar.moment,
+                status = Model.tempVar.status },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new { 
+                p = Model.PaginaActual - 1,
+                finicio = Model.tempVar.finicio,
+                ffin = Model.tempVar.ffin,
+                pernr = Model.tempVar.pernr,
+                dirIp = Model.tempVar.dirIp,
+                in_out = Model.tempVar.in_out,
+                moment = Model.tempVar.moment,
+                status = Model.tempVar.status },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("<<", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+    <span></span>
+    @if (Model.PaginaActual < Model.TotalPaginas)
+    {
+        @Html.ActionLink("Siguiente", "Index", new { 
+                p = Model.PaginaActual + 1,
+                finicio = Model.tempVar.finicio,
+                ffin = Model.tempVar.ffin,
+                pernr = Model.tempVar.pernr,
+                dirIp = Model.tempVar.dirIp,
+                in_out = Model.tempVar.in_out,
+                moment = Model.tempVar.moment,
+                status = Model.tempVar.status },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new { 
+                p = Model.TotalPaginas,
+                finicio = Model.tempVar.finicio,
+                ffin = Model.tempVar.ffin,
+                pernr = Model.tempVar.pernr,
+                dirIp = Model.tempVar.dirIp,
+                in_out = Model.tempVar.in_out,
+                moment = Model.tempVar.moment,
+                status = Model.tempVar.status },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("Siguiente", "Index", new { p = Model.TotalPaginas - 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new { p = Model.TotalPaginas },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+</div>

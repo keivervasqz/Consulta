@@ -1,0 +1,69 @@
+﻿@using Admin_Interface.Models.Request;
+@model Admin_Interface.Models.roles
+
+@{
+    ViewBag.Title = "Roles - Actualización";
+    //List<rolesResquest> listroles = (List<rolesResquest>)ViewBag.rolesDescripcion;
+    //List<SelectListItem> items = new List<SelectListItem>();
+
+    //foreach (rolesResquest s in listroles)
+    //{
+    //    SelectListItem selListItem = new SelectListItem()
+    //    {
+    //        Value = s.id.ToString(),
+    //        Text = s.rol_descripcion.ToString()
+    //    };
+    //    items.Add(selListItem);
+    //}
+}
+
+<h2>Roles</h2>
+
+<hr />
+
+<input type="hidden" id="page" value="roles_Usuario" />
+
+<div class="resalt form-group col-xs-12 text-center">
+
+    @using (Html.BeginForm())
+    {
+
+        <h3>Actualización de Roles</h3>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group col-sm-12" id="id_rol" name="id_rol" disabled="disabled">
+            @Html.EditorFor(model => model.id_rol, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            @Html.ValidationMessageFor(model => model.id_rol, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.id_rol, new { @id = "id_rol", @name = "id_rol" })
+        </div>
+
+        <div class="form-group col-sm-12" id="rol_descripcion" name="rol_descripcion">
+            @Html.EditorFor(model => model.rol_descripcion, new { htmlAttributes = new { @class = "form-control", @placeholder = "Descripción del Rol", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.rol_descripcion, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.rol_descripcion, new { @id = "rol_descripcion", @name = "rol_descripcion" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <select class="form-control" id="nivel_rol" name="nivel_rol">
+                <option value="" selected="selected" disabled="disabled">Seleccione Nivel de Rol</option>
+                <option value="1">Nivel 1</option>
+                <option value="2">Nivel 2</option>
+                <option value="3">Nivel 3</option>
+                <option value="4">Nivel 4</option>
+                <option value="5">Nivel 5</option>
+            </select>
+            @Html.HiddenFor(model => model.nivel_rol, new { @id = "nivel_rol", @name = "nivel_rol" })
+        </div>
+
+        <div class="form-group col-sm-12">
+            <input type="submit" value="Actualizar" class="btn btn-success" />
+            <a href="@Url.Action("Index", "roles_Usuario" )">
+                <input type="button" class="btn btn-info" value="Volver Atras" />
+            </a>
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

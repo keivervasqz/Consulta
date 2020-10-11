@@ -1,0 +1,47 @@
+﻿@model Admin_Interface.Models.UserLogin
+@{
+
+    ViewBag.Title = "Inicia Sesion";
+    //Layout = "~/Views/Layout";
+
+}
+<link href="~/Content/style.css" rel="stylesheet" />
+<h2></h2>
+<div align="center">
+    <br />
+    <img class="loading" src="~/images/logo.png" style="max-width:15%;width:auto;height:auto;" />
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="login">
+            <br /><br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @if (ViewBag.Message != "")
+            {
+                <div class="text-danger">*@ViewBag.Message</div>
+            }
+            <table>
+                <tr>
+                    @Html.LabelFor(Model => Model.pernr)
+                    @Html.EditorFor(model => model.pernr, new { htmlAttributes = new { @class = "form-control", @placeholder = "Pernr", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.pernr, "", new { @class = "text-danger" })
+                    @Html.LabelFor(Model => Model.password)
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Contraseña", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </tr>
+
+            </table>
+
+            <div class="col-md-offset-2  " style="margin-right: 20%">
+                <input type="submit" value="Ingresar" class="btn btn-primary btn-block btn-large" />
+            </div>
+
+
+        </div>
+    </div>
+}

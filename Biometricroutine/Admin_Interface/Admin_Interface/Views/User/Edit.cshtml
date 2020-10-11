@@ -1,0 +1,133 @@
+﻿    @using Admin_Interface.Models.Request;
+    @using Admin_Interface.Models;
+    @using Admin_Interface.Controllers;
+    @model Admin_Interface.Models.usuarios
+    @using System.Web.Security;
+    @using Admin_Interface;
+    
+
+    @{
+        ViewBag.Title = "Usuario - Actualización";
+        List<rolesResquest> listroles = (List<rolesResquest>)ViewBag.rolesDescripcion;
+        List<SelectListItem> itemrol = new List<SelectListItem>();
+
+        foreach (rolesResquest s in listroles)
+        {
+            SelectListItem selListItem = new SelectListItem()
+            {
+                Value = s.id_rol.ToString(),
+                Text = s.nivel_rol.ToString()
+            };
+            itemrol.Add(selListItem);
+        }
+
+        List<subdivisionRequest> subdivisionList = (List<subdivisionRequest>)ViewBag.nombreSucursal;
+        List<SelectListItem> itemssubdvs = new List<SelectListItem>();
+
+        foreach (subdivisionRequest s in subdivisionList)
+        {
+            SelectListItem selListItem = new SelectListItem()
+            {
+                Value = s.id.ToString(),
+                Text = s.nombre.ToString()
+            };
+            itemssubdvs.Add(selListItem);
+        }
+
+    }
+
+
+    <h2>Usuarios</h2>
+
+    <hr />
+
+    <input type="hidden" id="page" value="UserController" />
+
+    <div class="resalt form-group col-xs-12 text-center">
+
+        @using (Html.BeginForm())
+        {
+
+            <h3>Actualización de Usuario</h3>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @*<div class="form-group col-sm-12" id="id" name="id">
+                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.id, new { @id = "id", @name = "id" })
+            </div>*@
+
+            <div class="form-group col-sm-12" id="pernr" name="pernr">
+                @Html.EditorFor(model => model.pernr, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.pernr, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.pernr, new { @id = "pernr", @name = "pernr" })
+            </div>
+
+            <div class="form-group col-sm-12" id="name" name="name">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.name, new { @id = "name", @name = "name" })
+            </div>
+
+            <div class="form-group col-sm-12" id="lastname" name="lastname">
+                @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.lastname, new { @id = "lastname", @name = "lastname" })
+            </div>
+
+            <div class="form-group col-sm-12" id="email" name="email">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.email, new { @id = "email", @name = "email" })
+            </div>
+
+            <div class="form-group col-sm-12">
+                @Html.DropDownList("id_rol", itemrol, "Seleciona el Rol", new { @class = "form-control", @id = "id_rol", @required = "required" })
+                @Html.HiddenFor(model => model.id_rol, new { @id = "id_rol", @name = "id_rol" })
+            </div>
+
+            <div class="form-group col-sm-12">
+                @Html.DropDownList("sucursal", itemssubdvs, "Seleciona la sucursal", new { @class = "form-control", @id = "sucursal", @required = "required" })
+                @Html.ValidationMessageFor(model => model.sucursal, "", new { @class = "text-danger", @placeholder = "Sucursal" })
+            </div>
+
+            <div class="form-group col-sm-12" id="password" name="password">
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @type = "password", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.password, new { @id = "password", @name = "password" })
+            </div>
+
+            <div class="form-group col-sm-12" id="created_at" name="created_at">
+                @Html.EditorFor(model => model.created_at, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.created_at, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.created_at, new { @id = "created_at", @name = "created_at" })
+            </div>
+
+            @*<div class="form-group col-sm-12">
+                    @Html.DropDownList("status", items, "Seleciona el Status", new { @class = "form-control", @id = "status", @required = "required" })
+                    @Html.HiddenFor(model => model.status, new { @id = "status", @name = "status" })
+                </div>*@
+
+            <div class="form-group col-sm-12">
+                <select class="form-control" id="status" name="status">
+                    <option value="" selected="selected" disabled="disabled">Seleccione Estatus</option>
+                    <option value="0">Inactivo</option>
+                    <option value="1">Activo</option>
+                    <option value="2">Bloqueado</option>
+                </select>
+                @Html.HiddenFor(model => model.status, new { @id = "status", @name = "status" })
+            </div>
+
+        <div class="form-group col-sm-12">
+            <input type="submit" value="Actualización" class="btn btn-success" />
+            <a href="@Url.Action("Index", "User" )">
+                <input type="button" class="btn btn-info" value="Volver Atras" />
+            </a>
+        </div>
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+
+    </div>

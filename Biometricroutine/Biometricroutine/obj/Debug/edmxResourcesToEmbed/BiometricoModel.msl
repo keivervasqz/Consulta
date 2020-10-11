@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BIOMETRICOModelStoreContainer" CdmEntityContainer="BIOMETRICOEntities">
+    <EntitySetMapping Name="biometricos">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.biometricos">
+        <MappingFragment StoreEntitySet="biometricos">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ip" ColumnName="ip" />
+          <ScalarProperty Name="modelo" ColumnName="modelo" />
+          <ScalarProperty Name="id_subdivision" ColumnName="id_subdivision" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="divisiones">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.divisiones">
+        <MappingFragment StoreEntitySet="divisiones">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_sociedad" ColumnName="id_sociedad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="empleados">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.empleados">
+        <MappingFragment StoreEntitySet="empleados">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pernr" ColumnName="pernr" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="depto" ColumnName="depto" />
+          <ScalarProperty Name="sucursal" ColumnName="sucursal" />
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="date_update" ColumnName="date_update" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="status_empleado" ColumnName="status_empleado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="finger_empleados">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.finger_empleados">
+        <MappingFragment StoreEntitySet="finger_empleados">
+          <ScalarProperty Name="pernr" ColumnName="pernr" />
+          <ScalarProperty Name="fingerIndex" ColumnName="fingerIndex" />
+          <ScalarProperty Name="flag" ColumnName="flag" />
+          <ScalarProperty Name="fingerData" ColumnName="fingerData" />
+          <ScalarProperty Name="fingerLength" ColumnName="fingerLength" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logs_error">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.logs_error">
+        <MappingFragment StoreEntitySet="logs_error">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="platform" ColumnName="platform" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="routine" ColumnName="routine" />
+          <ScalarProperty Name="errorMessage" ColumnName="errorMessage" />
+          <ScalarProperty Name="ip" ColumnName="ip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="marcaciones">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.marcaciones">
+        <MappingFragment StoreEntitySet="marcaciones">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="device" ColumnName="device" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="date_marcacion" ColumnName="date_marcacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="marcaciones_app">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.marcaciones_app">
+        <MappingFragment StoreEntitySet="marcaciones_app">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pernr" ColumnName="pernr" />
+          <ScalarProperty Name="zatza" ColumnName="zatza" />
+          <ScalarProperty Name="ldate" ColumnName="ldate" />
+          <ScalarProperty Name="ltime" ColumnName="ltime" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="date" ColumnName="date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.roles">
+        <MappingFragment StoreEntitySet="roles">
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="rol_descripcion" ColumnName="rol_descripcion" />
+          <ScalarProperty Name="nivel_rol" ColumnName="nivel_rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sap_empleados">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.sap_empleados">
+        <MappingFragment StoreEntitySet="sap_empleados">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pernr" ColumnName="pernr" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="depto" ColumnName="depto" />
+          <ScalarProperty Name="sucursal" ColumnName="sucursal" />
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="status_empleado" ColumnName="status_empleado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sap_marcaciones">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.sap_marcaciones">
+        <MappingFragment StoreEntitySet="sap_marcaciones">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pernr" ColumnName="pernr" />
+          <ScalarProperty Name="ldate" ColumnName="ldate" />
+          <ScalarProperty Name="ltime" ColumnName="ltime" />
+          <ScalarProperty Name="zatza" ColumnName="zatza" />
+          <ScalarProperty Name="dallf" ColumnName="dallf" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="fulldata" ColumnName="fulldata" />
+          <ScalarProperty Name="id_biometrico" ColumnName="id_biometrico" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="date_capture" ColumnName="date_capture" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sociedades">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.sociedades">
+        <MappingFragment StoreEntitySet="sociedades">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="subdivisiones">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.subdivisiones">
+        <MappingFragment StoreEntitySet="subdivisiones">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_division" ColumnName="id_division" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuarios">
+      <EntityTypeMapping TypeName="BIOMETRICOModel.usuarios">
+        <MappingFragment StoreEntitySet="usuarios">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="pernr" ColumnName="pernr" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

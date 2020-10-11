@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Programar Marcaciones";
+    string messaje = ViewBag.result;
+    List<SelectListItem> listaUser = ViewBag.ListaUser as List<SelectListItem>;
+    List<SelectListItem> listaBiometricos = ViewBag.ListaBiometricos as List<SelectListItem>;
+    List<SelectListItem> listaSucursales = ViewBag.ListaSucursales as List<SelectListItem>;
+}
+
+<hr />
+
+<input type="hidden" id="page" value="UserBiometric" />
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-12">
+        <form method="post" action="/UserBiometric/GetMarcaciones">
+            <div class="form-group divider-vertical">
+                <h3 class="margen-left">Programar Marcaciones</h3>
+                <hr />
+                <div class="text-center form-group">
+                    <img src="~/images/tackstobase.png" height="70" />
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p>Guardar Marcaciones:</p>
+                        <select class="form-control" id="marca" name="marca">
+                            <option value="0" selected="selected">Inmediatamente</option>
+                            <option value="7">Cada 7 Días</option>
+                            <option value="15">Cada 15 Días</option>
+                            <option value="30">Cada 30 Días</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-4 hora-hidden">
+                    <p>Inicio Día de la Semana:</p>
+                    <select class="form-control" id="dia" name="dia">
+                        <option value="Domingo" selected="selected">Domingo</option>
+                        <option value="Lunes">Lunes</option>
+                        <option value="Martes">Martes</option>
+                        <option value="Miercoles">Miércoles</option>
+                        <option value="Jueves">Jueves</option>
+                        <option value="Viernes">Viernes</option>
+                        <option value="Sabado">Sábado</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-sm-4 hora-hidden">
+                    <p>Hora de evento:</p>
+                    <input type="text" id="hora" name="hora" maxlength="8" class="form-control time" data-date-format="HH:mm:ss" />
+                </div>
+
+                <div class="col-md-6 bio-hidden">
+                    <div class="form-group">
+                        <p>Seleccione Sucursal</p>
+                        <select class="form-control" id="sucursal" name="sucursal">
+                            <option value="" selected="selected">Seleccionar Todas</option>
+                            @foreach (var item in listaSucursales)
+                            {
+                                <option value="@Html.DisplayFor(Modelitem => item.Value)">@Html.DisplayFor(Modelitem => item.Text)</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-center col-xs-12" style="display:inline-block">
+                    <input type="submit" class="btn btn-success btn-anch" value="Enviar" onclick="mostrar()" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

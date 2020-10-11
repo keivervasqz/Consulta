@@ -1,0 +1,168 @@
+﻿@using Admin_Interface.Models;
+@model PaginadorAuditoria<auditoria>
+@{
+    ViewBag.Title = "Auditoria";
+}
+<h2>Auditoria</h2>
+<hr />
+
+<input type="hidden" id="page" value="Sociedades" />
+<div class="form-inline">
+    <form method="get" action=@Url.Action("Index", "auditorias")>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <input type="text" class="form-control" id="idUsuario" name="idUsuario" placeholder="Usuario" />
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <button id="btn-buscar" class="btn btn-success col-xs-12" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<hr />
+<div class="resalt form-group col-xs-12">
+    <div class="form-group">
+        <h3 class="h3-table">Auditorias</h3>
+    </div>
+    <table class="table table-responsive table-striped">
+        <tr>
+            <th>Pernr</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Proceso</th>
+            <th>IP</th>
+            <th>Acción</th>
+        </tr>
+        @foreach (var item in Model.Resultado)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaModificacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.proceso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ip)
+                </td>
+                <td>
+                    @if (item.accion.ToString() == "0")
+                    {
+                        var variable = "Login";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.accion.ToString() == "1")
+                    {
+                        var variable = "Crear";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.accion.ToString() == "2")
+                    {
+                        var variable = "Editar";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.accion.ToString() == "3")
+                    {
+                        var variable = "Borrar";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.accion.ToString() == "4")
+                    {
+                        var variable = "Cerrar Sesión";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.accion.ToString() == "5")
+                    {
+                        var variable = "Infracción";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                    @if (item.accion.ToString() == "6")
+                    {
+                        var variable = "Registrar";
+                        @Html.DisplayFor(modelItem => variable)
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="form-group">
+    @if (Model.Resultado.Count() > 0)
+    {
+        <span class="paginador">
+            <strong>@Model.TotalRegistros</strong> registros encontrados
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+        <span class="paginador">
+            Página <strong>@(Model.PaginaActual)</strong> de
+            <strong>@Model.TotalPaginas</strong>
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+    else
+    {
+        <span class="paginador">No hay resultados para esta búsqueda</span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+
+    @if (Model.PaginaActual > 1)
+    {
+        @Html.ActionLink("<<", "Index", new
+   {
+       p = 1,
+       usuario = Model.tempVar.idUsuario,
+   },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new
+   {
+       p = Model.PaginaActual - 1,
+       usuario = Model.tempVar.idUsuario,
+
+   },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("<<", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+    <span></span>
+    @if (Model.PaginaActual < Model.TotalPaginas)
+    {
+        @Html.ActionLink("Siguiente", "Index", new
+   {
+       p = Model.PaginaActual + 1,
+       usuario = Model.tempVar.idUsuario,
+   },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new
+   {
+       p = Model.TotalPaginas,
+       usuario = Model.tempVar.idUsuario,
+
+   },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("Siguiente", "Index", new { p = Model.TotalPaginas - 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new { p = Model.TotalPaginas },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+</div>

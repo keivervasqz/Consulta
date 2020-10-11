@@ -1,0 +1,139 @@
+﻿@using System.Web.Mvc.Html
+@using Admin_Interface.Models;
+@using System.Net.Mail;
+@using System.Net;
+@using System.Web.Security;
+@using Admin_Interface.Models.Request;
+
+<link href="~/Content/prueba.css" rel="stylesheet" />
+@model Admin_Interface.Models.usuarios
+
+@{
+    ViewBag.Title = "Crear Usuario";
+    List<rolesResquest> listroles = (List<rolesResquest>)ViewBag.rolesDescripcion;
+    List<SelectListItem> itemrol = new List<SelectListItem>();
+
+    foreach (rolesResquest s in listroles)
+    {
+        SelectListItem selListItem = new SelectListItem()
+        {
+            Value = s.id_rol.ToString(),
+            Text = s.nivel_rol.ToString()
+        };
+        itemrol.Add(selListItem);
+    }
+
+    List<subdivisionRequest> subdivisionList = (List<subdivisionRequest>)ViewBag.nombreSucursal;
+    List<SelectListItem> itemssubdvs = new List<SelectListItem>();
+
+    foreach (subdivisionRequest s in subdivisionList)
+    {
+        SelectListItem selListItem = new SelectListItem()
+        {
+            Value = s.id.ToString(),
+            Text = s.nombre.ToString()
+        };
+        itemssubdvs.Add(selListItem);
+    }
+
+}
+
+<hr>
+
+<h2>Crear Usuario</h2>
+
+<input type="hidden" id="page" value="EmpleadosCreate" />
+<hr />
+
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <strong>Exitoso! </strong>@ViewBag.Message
+        </div>
+    }
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="resalt form-group col-xs-12 text-center">
+            @*<div class="padre">
+                <div class="hijo">*@
+
+                    <div class="form-group col-sm-12">
+                        @Html.EditorFor(model => model.pernr, new { htmlAttributes = new { @class = "form-control", @placeholder = "Pernr" } })
+                        @Html.ValidationMessageFor(model => model.pernr, "", new { @class = "text-danger", @placeholder = "Pern" })
+                    </div>
+                    <div class="form-group col-sm-12">
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nombre" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger", @placeholder = "Nombre" })
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Apellido" } })
+                        @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger", @placeholder = "Apellido" })
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger", @placeholder = "Email" })
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        @Html.EditorFor(model => model.password, new { htmlAttributes = new { @type = "password", @class = "form-control", @placeholder = "Contraseña" } })
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger", @placeholder = "Contraseña" })
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        @Html.DropDownList("sucursal", itemssubdvs, "Seleciona la sucursal", new { @class = "form-control", @id = "sucursal", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.sucursal, "", new { @class = "text-danger", @placeholder = "Sucursal" })
+                    </div>
+ 
+                    <div class="form-group col-sm-12">
+                        <select class="form-control" id="status" name="status" required="required">
+                            <option value="" selected="selected" disabled="disabled">Seleccione Estatus</option>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                            <option value="2">Bloqueado</option>
+                        </select>
+                        @*@Html.EditorFor(model => model.status, new { htmlAttributes = new { @class = "form-control", @placeholder = "Status" } })*@
+                        @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger", @placeholder = "Status" })
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        @Html.DropDownList("id_rol", itemrol, "Seleciona el Rol", new { @class = "form-control", @id = "id_rol", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.id_rol, "", new { @class = "text-danger", @placeholder = "Id Rol" })
+                    </div>
+                    <hr>
+                    <div class="form-group col-sm-12">
+                        <input type="submit" value="Crear Usuario" class="btn btn-success" />
+                        <a href="@Url.Action("Index", "User" )">
+                            <input type="button" class="btn btn-info" value="Volver Atras" />
+                        </a>
+                    </div>
+
+                </div>
+
+
+            if (ViewBag.Message != null)
+            {
+            <div class="alert alert-danger">
+                <strong>Error!</strong>@ViewBag.Message
+            </div>
+            }
+            }
+            }
+
+            @*<div>
+                    @Html.ActionLink("Login", "Login")
+                </div>*@
+
+            @section Scripts{
+                <script src="~/Scripts/jquery.validate.min.js"></script>
+                <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+

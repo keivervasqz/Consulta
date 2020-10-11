@@ -1,0 +1,26 @@
+﻿.padre {
+
+  height: 150px;
+  /*IMPORTANTE*/
+  display: flex;
+  justify-content: center;
+
+}
+
+.hijo {
+
+  margin-top: auto;
+
+}
+
+.form-center {
+   
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+
+}
+
+ul{
+    list-style:none;
+}

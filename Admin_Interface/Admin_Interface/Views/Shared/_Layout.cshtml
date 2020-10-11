@@ -1,0 +1,128 @@
+﻿@using Admin_Interface.Models;
+@using Admin_Interface.Models.Request;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/datepicker")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body id="body">
+
+    <div id="navbanner" class="navbar navbar-inverse navbar-fixed-top">
+            
+        <div class="container container-nav">
+            <img src="~/images/logo.png" height="40" align="left" />
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse resize-nav">
+                <ul class="nav navbar-nav">
+
+                    @if (Request.Cookies["idrol"] != null) {
+                        HttpCookie cook = new HttpCookie("testcook");
+                        cook = Request.Cookies["idrol"];
+                        string rolNivel = cook.Value;
+                    if (Session["User"] != null)
+                    {
+                        switch (rolNivel)
+                        {
+                            case "nivel_rol=1":
+                            <li>@Html.ActionLink("Usuarios", "Index", "User")</li>
+                            <li>@Html.ActionLink("Subdivisiones", "Index", "subdivision")</li>
+                            <li>@Html.ActionLink("Marcaciones", "Index", "sap_marcacion")</li>
+                                break;
+                            case "nivel_rol=2":
+                                <li>@Html.ActionLink("Subdivisiones", "Index", "subdivision")</li>
+                                <li>@Html.ActionLink("Marcaciones", "Index", "sap_marcacion")</li>
+                                break;
+                            case "nivel_rol=3":
+                                <li>@Html.ActionLink("Usuarios", "Index", "User")</li>
+                                <li>@Html.ActionLink("Divisiones", "Index", "division")</li>
+                                <li>@Html.ActionLink("Subdivisiones", "Index", "subdivision")</li>
+                                <li>@Html.ActionLink("Marcaciones", "Index", "sap_marcacion")</li>
+                                <li>@Html.ActionLink("Empleados", "Index", "sap_empleado")</li>
+                                break;
+                            case "nivel_rol=4":
+                                <li>@Html.ActionLink("Usuarios", "Index", "User")</li>
+                                <li>@Html.ActionLink("Sociedades", "Index", "sociedad")</li>
+                                <li>@Html.ActionLink("Divisiones", "Index", "division")</li>
+                                <li>@Html.ActionLink("Subdivisiones", "Index", "subdivision")</li>
+                                <li>@Html.ActionLink("Empleados", "Index", "sap_empleado")</li>
+                                <li>@Html.ActionLink("Biométricos", "Index", "biometrico")</li>
+                                <li>@Html.ActionLink("Marcaciones", "Index", "sap_marcacion")</li>
+                                <li><a href="">Configuraciónes de Biométricos</a>                                   
+                                    <ul>
+                                        <li>@Html.ActionLink("Guardar Empleados en base de datos", "Index", "UserBiometric")</li>
+                                        <li>@Html.ActionLink("Guardar empleados en Biométricos", "empleadosBiometricos", "UserBiometric")</li>
+                                        <li>@Html.ActionLink("Trasladar Empleado a Sucursal", "trasladarEmpleado", "UserBiometric")</li>
+                                        <li>@Html.ActionLink("Programar Marcaciones", "programarMarcaciones", "UserBiometric")</li>
+                                    </ul>
+                                </li>
+                                    break;
+                                case "nivel_rol=5":
+                                <li>@Html.ActionLink("Cerrar sesión", "Logout", "Cerrar")</li>
+                                    break;
+                            }
+                          }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="renderbody">
+        @RenderBody()
+        <hr />
+    </div>
+
+    <footer id="footerdiv" class="panel-footer container-fluid text-center">
+        <div class="row col-centered">
+            <div class="col-xs-12 form-group">
+                <img src="~/images/logo.png" height="40" />
+            </div>
+            <div class="col-xs-12 form-group hcenter">
+                Grupo MELO | Copyright &copy; @DateTime.Now.Year
+            </div>
+            <ul class="col-xs-12 form-group hcenter" style="color:#000000">
+                @if (Request.Cookies["idrol"] != null)
+                {
+                    HttpCookie cook = new HttpCookie("testcook");
+                    cook = Request.Cookies["idrol"];
+                    string rolNivel = cook.Value;
+                    if (Session["User"] != null)
+                    {
+                        switch (rolNivel)
+                        {
+                         case "nivel_rol=4":
+                        @*@Html.ActionLink("Roles | ", "Index", "roles_Usuario")*@
+                        @Html.ActionLink(" Auditorias | ", "Index", "auditorias")
+                                break;
+
+                        }
+                        @Html.ActionLink(" Cerrar sesión", "Logout", "Cerrar")
+                    }
+
+                }
+               
+            </ul>
+</div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datepicker")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

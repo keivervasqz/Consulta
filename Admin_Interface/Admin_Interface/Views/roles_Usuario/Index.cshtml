@@ -1,0 +1,156 @@
+﻿@using Admin_Interface.Models;
+@using Admin_Interface.Models.Request;
+
+@model PaginadorRoles_Usuarios<roles>
+
+@{
+    ViewBag.Title = "Roles";
+    List<rolesResquest> listroles = (List<rolesResquest>)ViewBag.rolesDescripcion;
+    List<SelectListItem> itemroles = new List<SelectListItem>();
+
+    foreach (rolesResquest s in listroles)
+    {
+        SelectListItem selListItem = new SelectListItem()
+        {
+            Value = s.id_rol.ToString(),
+            Text = s.nivel_rol.ToString()
+        };
+        itemroles.Add(selListItem);
+    }
+}
+
+<h2>Roles</h2>
+
+<hr />
+
+<input type="hidden" id="page" value="Roles" />
+
+<div class="form-inline">
+    <form method="get" action=@Url.Action("Index", "roles_Usuario")>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <input type="text" class="form-control" id="id_rol" name="id_rol" placeholder="Id Rol" />
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 form-group">
+                    <select class="form-control" id="nivel_rol" name="nivel_rol">
+                        <option selected="selected" disabled="disabled">Nivel Rol</option>
+                        @foreach (SelectListItem item in itemroles)
+                        {
+                            <option value="@Html.DisplayFor(model => item.Value)">@Html.DisplayFor(model => item.Text)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-2">
+                <button id="btn-buscar" class="btn btn-success col-xs-12" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr />
+
+<div class="resalt form-group col-xs-12">
+    <div class="form-group">
+        <h3 class="h3-table">Roles registrados</h3>
+
+        <a href="@Url.Action("Create", "roles_Usuario")" class="create-intable">
+            <input type="button" class="btn btn-success" value="Crear Nuevo Rol" />
+        </a>
+    </div>
+    <table class="table table-responsive table-striped">
+        <tr>
+            <th>Id Rol</th>
+            <th>Nivel de Rol</th>
+            @*<th class="text-right"><div class="td-icon-table">Acciones</div></th>*@
+        </tr>
+        @foreach (var item in Model.Resultado)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_rol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nivel_rol)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="form-group">
+    @if (Model.Resultado.Count() > 0)
+    {
+        <span class="paginador">
+            <strong>@Model.TotalRegistros</strong> registros encontrados
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+        <span class="paginador">
+            Página <strong>@(Model.PaginaActual)</strong> de
+            <strong>@Model.TotalPaginas</strong>
+        </span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+    else
+    {
+        <span class="paginador">No hay resultados para esta búsqueda</span>
+        <span class="paginador">&nbsp;|&nbsp;</span>
+    }
+
+    @if (Model.PaginaActual > 1)
+    {
+        @Html.ActionLink("<<", "Index", new
+   {
+       p = 1,
+       id_rol = Model.tempVar.id_rol,
+       nivel_rol = Model.tempVar.nivel_rol
+   },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new
+   {
+       p = Model.PaginaActual - 1,
+       id_rol = Model.tempVar.id_rol,
+       nivel_rol = Model.tempVar.nivel_rol
+   },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("<<", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink("Anterior", "Index", new { p = 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+    <span></span>
+    @if (Model.PaginaActual < Model.TotalPaginas)
+    {
+        @Html.ActionLink("Siguiente", "Index", new
+   {
+       p = Model.PaginaActual + 1,
+       id_rol = Model.tempVar.id_rol,
+       nivel_rol = Model.tempVar.nivel_rol
+   },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new
+   {
+       p = Model.TotalPaginas,
+       id_rol = Model.tempVar.id_rol,
+       nivel_rol = Model.tempVar.nivel_rol
+   },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("Siguiente", "Index", new { p = Model.TotalPaginas - 1 },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new { p = Model.TotalPaginas },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+</div>
